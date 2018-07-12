@@ -32,6 +32,7 @@ $(function() {
             for(feeds of allFeeds){
                 // expects url in the feed to be defined
                 expect(feeds.url).toBeDefined();
+                expect(feeds.url).not.toBe('');
             };
         });
 
@@ -40,6 +41,7 @@ $(function() {
             for(feeds of allFeeds){
                 // expects the name in the feed to be defined
                 expect(feeds.name).toBeDefined();
+                expect(feeds.name).not.toBe('');
             };
         });
     });
@@ -55,10 +57,6 @@ $(function() {
         });
 
         it('changes visibility when clicked', function() {
-            // Makes sure there is a slide-menu
-            expect($('div.slide-menu').html()).toBeDefined();
-            // Makes sure that there is a feedlist
-            expect($('ul.feed-list').html()).toBeDefined();
             // Clicks on menuIcon
             menuIcon.click();
             /* Makes sure menu-hidden class was removed
@@ -77,16 +75,13 @@ $(function() {
     describe('Initial Entries', function() {
         // Makes sure loadFeed() is run before test start
         beforeEach(function(done) {
-            loadFeed(0, function() {
-                done();
-            });
+            loadFeed(0, done);
         });
 
-        it('should contain at least one entry', function (done) {
-            let entry = $('.entry');
+        it('should contain at least one entry', function() {
+            let entry = $('.feed .entry');
             // Expects the html to contain the entries content
-            expect(entry.html()).toBeDefined();
-            done();
+            expect(entry.length).not.toBe(0);
         });
     });
 
@@ -110,12 +105,11 @@ $(function() {
             });
         });
 
-        it('content should actually change', function (done) {
+        it('content should actually change', function() {
             /* Expects the first entries to not
             / be equel to the second entries
             */
             expect(entry1).not.toBe(entry2);
-            done();
         });
     });
 }());
