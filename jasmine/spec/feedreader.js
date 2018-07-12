@@ -32,6 +32,7 @@ $(function() {
             for(feeds of allFeeds){
                 // expects url in the feed to be defined
                 expect(feeds.url).toBeDefined();
+                // Expects the url not be empty
                 expect(feeds.url).not.toBe('');
             };
         });
@@ -41,6 +42,7 @@ $(function() {
             for(feeds of allFeeds){
                 // expects the name in the feed to be defined
                 expect(feeds.name).toBeDefined();
+                // Expects the name not be empty
                 expect(feeds.name).not.toBe('');
             };
         });
@@ -80,7 +82,7 @@ $(function() {
 
         it('should contain at least one entry', function() {
             let entry = $('.feed .entry');
-            // Expects the html to contain the entries content
+            // Expect there to be at least one .entry in .feed container
             expect(entry.length).not.toBe(0);
         });
     });
