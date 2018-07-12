@@ -27,7 +27,6 @@ $(function() {
         });
 
 
-        // Expects Feeds to have an url
         it('have an url', function() {
             // Loops through the feed
             for(feeds of allFeeds){
@@ -36,7 +35,6 @@ $(function() {
             };
         });
 
-        // Expects Feeds to have a name
         it('have a name', function() {
             // Loops through the feed
             for(feeds of allFeeds){
@@ -48,21 +46,22 @@ $(function() {
 
 
     describe('The menu', function(){
-        // Makes sure that the menue is hidden by default
+        // Global variable for this spec
+        let menuIcon = $('.menu-icon-link');
+
         it('must be hidden by default', function () {
-            // Makes sure ther is a slide-menu
-            expect($('div.slide-menu')).toBeDefined();
             // Makes sure that body has the class of menu-hidden
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
-        /* Makes sure that the slide-menu is visible when clicked
-        * and hidden when clicked again
-        */
-        it('is visible when clicked', function() {
-            let menuIcon = $('.menu-icon-link');
+
+        it('changes visibility when clicked', function() {
+            // Makes sure there is a slide-menu
+            expect($('div.slide-menu').html()).toBeDefined();
+            // Makes sure that there is a feedlist
+            expect($('ul.feed-list').html()).toBeDefined();
             // Clicks on menuIcon
             menuIcon.click();
-            /* Makes sure menu-hidden class is gone
+            /* Makes sure menu-hidden class was removed
             * which indicates that the slide menu is showing
             */
             expect($('body').hasClass('menu-hidden')).toBe(false);
@@ -74,48 +73,47 @@ $(function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
-    // Test suite for Initial Entries
+
     describe('Initial Entries', function() {
-        /* TODO: Write a test that ensures when the loadFeed
-        * function is called and completes its work, there is at least
-        * a single .entry element within the .feed container.
-        * Remember, loadFeed() is asynchronous so this test will require
-        * the use of Jasmine's beforeEach and asynchronous done() function.
-        */
         // Makes sure loadFeed() is run before test start
         beforeEach(function(done) {
             loadFeed(0, function() {
                 done();
             });
         });
+
         it('should contain at least one entry', function (done) {
             let entry = $('.entry')
             // Expects the html to contain the entries content
             expect(entry.html()).toBeDefined();
             done();
-        })
-
+        });
     });
-    /* TODO: Write a new test suite named "New Feed Selection" */
-    describe('New Feed Selection', function() {
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-        * by the loadFeed function that the content actually changes.
-        * Remember, loadFeed() is asynchronous.
-        */
-        let entry1,
-        entry2;
+    describe('New Feed Selection', function() {
+        // Global variable declaration for this spec
+        let entry1;
+        let entry2;
+
+        // Makes sure the loadFeed() functions are run before test start
         beforeEach(function(done) {
-                loadFeed(1, function() {
-                    entry1 = $('.entry').html()
+            // Runs loadFeed(1)
+            loadFeed(1, function() {
+                // Assigns the entries to the first entry variable
+                entry1 = $('.feed').html();
+                // Runs loadFeed(0)
+                loadFeed(0, function() {
+                    // Assigns the entries to the second entry variable
+                    entry2 = $('.feed').html();
                     done();
                 });
-                loadFeed(0, function() {
-                    entry2 = $('.entry').html()
-                    done();
             });
         });
+
         it('content should actually change', function (done) {
+            /* Expects the first entries to not
+            / be equel to the second entries
+            */
             expect(entry1).not.toBe(entry2);
             done();
         })
