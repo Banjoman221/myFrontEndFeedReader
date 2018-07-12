@@ -83,7 +83,7 @@ $(function() {
         });
 
         it('should contain at least one entry', function (done) {
-            let entry = $('.entry')
+            let entry = $('.entry');
             // Expects the html to contain the entries content
             expect(entry.html()).toBeDefined();
             done();
@@ -116,6 +116,6 @@ $(function() {
             */
             expect(entry1).not.toBe(entry2);
             done();
-        })
-    })
+        });
+    });
 }());
